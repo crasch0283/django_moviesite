@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block title %}List O' Movies{% endblock %}
+
+{% block content %}
+{% if movies %}
+    {% for movie in movies %}
+        <div class="row bounce">
+            <div class="col-md-2">
+                <img src="{{movie.movieImg.url}}" alt="Alternate Text" width="100px"/>
+            </div>
+            <div class="col-md-10">
+                <h3>Title: {{movie.title | title}}</h3>
+                <h4 class="thin">Director: {{movie.director | title}}</h4>
+                <h4 class="thin">Year Released: {{movie.yearReleased}}</h4>
+                <button type="button" data-bs-toggle="modal" data-bs-target="#deleteModal{{movie.id}}" id="{{movie.id}}"
+                        class="btn btn-sm btn-outline-danger deleteBtn">Remove
+                </button>
+                <button type="button" data-bs-toggle="modal" data-bs-target="#editModal{{movie.id}}"
+                        class="btn btn-sm btn-outline-info editBtn">Edit
+                </button>
+                <button type="button"
+                        class="btn btn-sm btn-outline-secondary">View Details
+                </button>
+                <!--Delete ModalStart-->
+                <form action="{% url 'deletemovie' movie.id %}" method="post">
+                    {% csrf_token %}
+                    <div class="modal" id="deleteModal{{movie.id}}" tabindex="-1">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Remove '{{movie.title|title}}'?</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Do you really want to remove this movie?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!--Delete ModalEnd-->
+                <!--Edit ModalStart-->
+                <form action="{% url 'editmovie' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="modal" id="editModal{{movie.id}}" tabindex="-1">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Edit '{{movie.title|title}}'</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <input type="hidden" name="editId" value="{{movie.id}}">
+                                    {{updateForm}}
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Update</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!--Edit ModalEnd-->
+            </div>
+        </div>
+        <hr/>
+    {% endfor %}
+{% else %}
+    <div class="text-center">
+        <h4 class="text-secondary">No Movies Currently Available!</h4>
+    </div>
+{% endif %}
+{% endblock %}
+

@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}Movie Not Found{% endblock %}
+
+{% block content %}
+    <div class="text-center">
+        <h3 class="text-danger">Movie Not Found!  Please Try Again.</h3>
+        <a href="{% url 'home' %}">Back Home</a>
+    </div>
+{% endblock %}

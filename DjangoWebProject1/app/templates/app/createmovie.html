@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Create Movie{% endblock %}
+
+{% block content %}
+<h2>Create A Movie</h2>
+<form action="/" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% for field in forms %}
+        <tr>
+            <td>{{field.label_tag}}</td>
+            <td>
+                {{field}}
+                <span class="text-danger">{{field.errors}}</span>
+            </td>
+        </tr>
+    {% endfor %}
+    <input type="submit" value="Submit" class="btn btn-primary mt-3" />
+</form>
+
+{% endblock %}

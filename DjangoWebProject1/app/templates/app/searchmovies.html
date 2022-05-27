@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}Search Results{% endblock %}
+
+{% block content %}
+<div>
+    <h4>Search Results:</h4>
+     <div class="row bounce">
+            <div class="col-md-2">
+                <img src="{{movie.movieImg.url}}" alt="Alternate Text" width="100px"/>
+            </div>
+            <div class="col-md-10">
+                <h3>Title: {{movie.title | title}}</h3>
+                <h4 class="thin">Director: {{movie.director | title}}</h4>
+                <h4 class="thin">Year Released: {{movie.yearReleased}}</h4>
+                <button type="button" data-bs-toggle="modal" data-bs-target="#deleteModal{{movie.id}}" id="{{movie.id}}"
+                        class="btn btn-danger deleteBtn">Remove
+                </button>
+                <!--ModalStart-->
+                <form action="{% url 'deletemovie' movie.id %}" method="post">
+                    {% csrf_token %}
+                    <div class="modal" id="deleteModal{{movie.id}}" tabindex="-1">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Remove '{{movie.title}}'?</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Do you really want to remove this movie?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!--ModalEnd-->
+            </div>
+        </div>
+</div>
+
+{% endblock %}
