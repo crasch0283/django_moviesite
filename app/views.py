@@ -3,7 +3,7 @@ from django.db import IntegrityError
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 
-from DjangoWebProject1 import settings
+from config import settings
 from .models import Movie
 from .forms import MovieForm, UpdateForm
 
