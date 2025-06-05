@@ -21,3 +21,15 @@ http://<host>/oauth/complete/github/
 ```
 
 The `/oauth/` prefix matches the URL configuration in `config/urls.py`.
+
+## Local Environment Variables
+
+Create a `.env` file based on `.env.example` and provide your GitHub OAuth
+credentials:
+
+```
+cp .env.example .env
+# then edit .env to add your values
+```
+
+The application will load these variables automatically when it starts.
