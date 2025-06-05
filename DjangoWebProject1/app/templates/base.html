@@ -34,6 +34,12 @@
                     <input class="form-control me-2" name="title" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
+                {% if request.user.is_authenticated %}
+                    <span class="navbar-text me-2">Hi, {{ request.user.username }}</span>
+                    <a href="{% url 'logout' %}" class="btn btn-outline-danger me-2">Logout</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-outline-primary me-2">Login</a>
+                {% endif %}
                 <a href="{% url 'admin:index' %}" class="btn btn-warning">Admin Dashboard</a>
             </div>
         </div>

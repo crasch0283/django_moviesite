@@ -76,3 +76,7 @@ def editmovie(request):
 
             return HttpResponseRedirect("/")
         return HttpResponseRedirect("/")
+
+
+def login_view(request):
+    return render(request, "app/login.html")
