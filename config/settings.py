@@ -138,12 +138,28 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-LOGIN_URL = '/login/'
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'
+# Authentication settings
+LOGIN_URL = 'http://127.0.0.1:8000/login/'
+LOGIN_REDIRECT_URL = 'http://127.0.0.1:8000/'
+LOGOUT_REDIRECT_URL = 'http://127.0.0.1:8000/'
 
-SOCIAL_AUTH_GITHUB_KEY = os.environ.get('SOCIAL_AUTH_GITHUB_KEY', '')
-SOCIAL_AUTH_GITHUB_SECRET = os.environ.get('SOCIAL_AUTH_GITHUB_SECRET', '')
+# GitHub OAuth Configuration
+# -------------------------
+# IMPORTANT: The redirect_uri error means your callback URL in GitHub doesn't match what Django expects
+# You need to update your GitHub OAuth App at: https://github.com/settings/developers
+#
+# Make sure your GitHub OAuth App has EXACTLY these settings:
+# - Homepage URL: http://127.0.0.1:8000
+# - Authorization callback URL: http://127.0.0.1:8000/oauth/complete/github/
+#
+# Note: Use 127.0.0.1 instead of localhost to avoid redirect_uri mismatch errors
+SOCIAL_AUTH_GITHUB_KEY = 'Ov23liWG6YDXWAp5VRwg'  # Your GitHub OAuth App Client ID
+SOCIAL_AUTH_GITHUB_SECRET = 'f9eab1ca737965cec2abd5ebd195234216f7b29c'  # Your GitHub OAuth App Client Secret
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 
+# GitHub OAuth settings
+SOCIAL_AUTH_GITHUB_SCOPE = ['user:email']
+
+# Use 127.0.0.1 instead of localhost for consistent URL matching
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = 'http://127.0.0.1:8000/'
 

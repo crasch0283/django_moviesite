@@ -27,8 +27,8 @@ class MovieForm(ModelForm):
 class UpdateForm(forms.Form):
     title = forms.CharField(label="Movie Title", max_length=50)
     director = forms.CharField(label="Director", max_length=50)
-    yearPublished = forms.CharField(label="Year Published", max_length=4)
+    yearReleased = forms.CharField(label="Year Released", max_length=4)
 
     title.widget.attrs.update({'class': 'form-control'})
     director.widget.attrs.update({'class': 'form-control'})
-    yearPublished.widget.attrs.update({'class': 'form-control'})
+    yearReleased.widget.attrs.update({'class': 'form-control'})

@@ -2,25 +2,45 @@
 {% block title %}List O' Movies{% endblock %}
 
 {% block content %}
-{% if movies %}
-    {% for movie in movies %}
-        <div class="row bounce">
-            <div class="col-md-2">
-                <img src="{{movie.movieImg.url}}" alt="Alternate Text" width="100px"/>
-            </div>
-            <div class="col-md-10">
-                <h3>Title: {{movie.title | title}}</h3>
-                <h4 class="thin">Director: {{movie.director | title}}</h4>
-                <h4 class="thin">Year Released: {{movie.yearReleased}}</h4>
-                <button type="button" data-bs-toggle="modal" data-bs-target="#deleteModal{{movie.id}}" id="{{movie.id}}"
-                        class="btn btn-sm btn-outline-danger deleteBtn">Remove
-                </button>
-                <button type="button" data-bs-toggle="modal" data-bs-target="#editModal{{movie.id}}"
-                        class="btn btn-sm btn-outline-info editBtn">Edit
-                </button>
-                <button type="button"
-                        class="btn btn-sm btn-outline-secondary">View Details
-                </button>
+<div class="container py-4">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="display-4 text-center">Your Movie Collection</h1>
+            <p class="lead text-center text-muted">Browse, manage, and discover your favorite films</p>
+        </div>
+    </div>
+    
+    {% if movies %}
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+        {% for movie in movies %}
+        <div class="col">
+            <div class="movie-card">
+                <div class="row g-0">
+                    <div class="col-md-4 movie-image">
+                        <img src="{{movie.movieImg.url}}" alt="{{movie.title}}" class="img-fluid rounded" />
+                    </div>
+                    <div class="col-md-8">
+                        <div class="movie-details ps-md-3">
+                            <h3 class="movie-title">{{movie.title | title}}</h3>
+                            <p class="movie-info"><strong>Director:</strong> {{movie.director | title}}</p>
+                            <p class="movie-info"><strong>Year:</strong> {{movie.yearReleased}}</p>
+                            
+                            <div class="movie-actions">
+                                <button type="button" data-bs-toggle="modal" data-bs-target="#editModal{{movie.id}}"
+                                    class="btn btn-sm btn-outline-info">
+                                    <i class="bi bi-pencil"></i> Edit
+                                </button>
+                                <button type="button" data-bs-toggle="modal" data-bs-target="#deleteModal{{movie.id}}" id="{{movie.id}}"
+                                    class="btn btn-sm btn-outline-danger">
+                                    <i class="bi bi-trash"></i> Remove
+                                </button>
+                                <a href="{% url 'movie_details' movie.id %}" class="btn btn-sm btn-outline-secondary">
+                                    <i class="bi bi-eye"></i> Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!--Delete ModalStart-->
                 <form action="{% url 'deletemovie' movie.id %}" method="post">
                     {% csrf_token %}
@@ -57,21 +77,39 @@
                                     {{updateForm}}
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Update</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn btn-primary">Update</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </form>
                 <!--Edit ModalEnd-->
+                </div>
             </div>
         </div>
-        <hr/>
-    {% endfor %}
-{% else %}
-    <div class="text-center">
-        <h4 class="text-secondary">No Movies Currently Available!</h4>
+        {% endfor %}
     </div>
-{% endif %}
+    {% else %}
+    <div class="empty-state">
+        <div class="py-5">
+            <i class="bi bi-film" style="font-size: 3rem; color: var(--light-text);"></i>
+            <h4 class="mt-3">No Movies Currently Available!</h4>
+            <p class="text-muted">Add your first movie to start building your collection</p>
+            <a href="{% url 'createmovie' %}" class="btn btn-primary mt-2">
+                <i class="bi bi-plus-circle"></i> Add Your First Movie
+            </a>
+        </div>
+    </div>
+    {% endif %}
+</div>
 {% endblock %}
 
+{% block extra_js %}
+<script>
+    // Add any custom JavaScript here
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize any components that need JavaScript
+    });
+</script>
+{% endblock %}

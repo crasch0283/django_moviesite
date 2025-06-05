@@ -23,7 +23,7 @@ from app import views
 urlpatterns = [
     path("", views.index, name="home"),
     path("login/", views.login_view, name="login"),
-    path("logout/", LogoutView.as_view(next_page="/"), name="logout"),
+    path("logout/", views.logout_view, name="logout"),
     path("oauth/", include('social_django.urls', namespace='social')),
     path("admin/", admin.site.urls),
     path("success/", views.success),
@@ -31,6 +31,7 @@ urlpatterns = [
     path('deletemovie/<str:id>', views.deletemovie, name="deletemovie"),
     path('searchmovies/', views.searchmovies, name="searchmovies"),
     path('editmovie/', views.editmovie, name="editmovie"),
+    path('movie/<str:id>/', views.movie_details, name="movie_details"),
 ]
 
 if settings.DEBUG:
